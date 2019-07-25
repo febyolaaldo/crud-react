@@ -135,10 +135,12 @@ class Contacts extends Component {
     }
 
     if(showEdit) {
-      this.props.editContact(id, payloads)
-      this.setState({
-        showEdit: false,
-        showAdd: false
+      this.props.editContact(id, payloads).then(() => {
+        this.setState({
+          show: false,
+          showEdit: false,
+          showAdd: false
+        })
       })
     } else {
       this.props.addContact(payloads).then(() => {
@@ -166,7 +168,12 @@ class Contacts extends Component {
   handleDelete(idDelete) {
     let confirm_delete = window.confirm("Are You Sure to Delete this Post ?");
     if(confirm_delete){
-      this.props.deleteContact(idDelete)
+      this.props.deleteContact(idDelete).then(() => {
+        this.setState({
+          show: false,
+          showAdd: false
+        })
+      })
     }
   }
 

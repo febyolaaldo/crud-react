@@ -64,22 +64,28 @@ export const contactActions = {
   },
   editingContact: (id, data) => {
     return (dispatch) => {
-      return API.put('/contact/'+id, '', data)
-        .then((result) => {
-          dispatch(editContact(result))
-        }).catch((error) => {
-          console.log(error)
-        })
+      return new Promise((resolve, reject) => {
+        return API.put('/contact/'+id, '', data)
+          .then((result) => {
+            dispatch(editContact(result))
+            resolve(result)
+          }).catch((error) => {
+            console.log(error)
+            reject(error)
+          })
+      })
     }
   },
   deletingContact: (id) => {
     return (dispatch) => {
-      return API.delete('/contact/'+id, '')
-        .then((result) => {
-          dispatch(deleteContact(id))
-        }).catch((error) => {
-          console.log(error)
-        })
+      return new Promise((resolve, reject) => {
+        return API.delete('/contact/'+id, '')
+          .then((result) => {
+            dispatch(deleteContact(id))
+          }).catch((error) => {
+            console.log(error)
+          })
+      })
     }
   }
 }
