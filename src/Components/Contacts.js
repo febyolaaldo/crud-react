@@ -9,6 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import Snackbar from '@material-ui/core/Snackbar';
 import ListItem from '@material-ui/core/ListItem';
 import CloseIcon from '@material-ui/icons/Close';
 import Divider from '@material-ui/core/Divider';
@@ -41,6 +42,8 @@ class Contacts extends Component {
       show: false,
       showEdit: false,
       showAdd: false,
+      showSnackbar: false,
+      labelSnackbar: '',
       id: '',
       firstName: '',
       lastName: '',
@@ -86,7 +89,8 @@ class Contacts extends Component {
   handleClose() {
     this.setState({
       show: false,
-      showAdd: false
+      showAdd: false,
+      showSnackbar: false,
     })
   }
 
@@ -139,14 +143,18 @@ class Contacts extends Component {
         this.setState({
           show: false,
           showEdit: false,
-          showAdd: false
+          showAdd: false,
+          showSnackbar: true,
+          labelSnackbar: 'Edit'
         })
       })
     } else {
       this.props.addContact(payloads).then(() => {
         this.props.fetchDataContact()
         this.setState({
-          showAdd: false
+          showAdd: false,
+          showSnackbar: true,
+          labelSnackbar: 'Add'
         })
       })
     }
@@ -171,7 +179,9 @@ class Contacts extends Component {
       this.props.deleteContact(idDelete).then(() => {
         this.setState({
           show: false,
-          showAdd: false
+          showAdd: false,
+          showSnackbar: true,
+          labelSnackbar: 'Delete'
         })
       })
     }
@@ -206,7 +216,7 @@ class Contacts extends Component {
 
   render() {
     const { contacts, contact_detail } = this.props
-    const { show, showAdd, firstName, lastName, age, urlPhoto, labelCard } = this.state
+    const { show, showAdd, showSnackbar, labelSnackbar, firstName, lastName, age, urlPhoto, labelCard } = this.state
 
     let listContacts = contacts !== undefined ?  contacts.map((el, i) => (this.listContacts(el, i, this.handleClickOpen))) : ''
     
@@ -316,6 +326,29 @@ class Contacts extends Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          open={showSnackbar}
+          autoHideDuration={2000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{labelSnackbar} Success</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="close"
+              color="inherit"
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
         <Fab color="primary" aria-label="Add" onClick={this.handleShowAddDialogs} style={style.FabButton()}>
           <AddIcon />
         </Fab>
