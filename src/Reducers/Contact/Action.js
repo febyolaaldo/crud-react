@@ -11,8 +11,8 @@ const fetchDetailContactSuccess = (data) => {
   return { type: types.FETCH_CONTACT, payload: data }
 }
 
-const addContact = (data) => {
-  return { type: types.ADD_CONTACT, payload: data }
+const addContact = () => {
+  return { type: types.ADD_CONTACT }
 }
 
 const editContact = (data) => {
@@ -24,7 +24,7 @@ const deleteContact = (data) => {
 }
 
 export const contactActions = {
-  fetchDataContact: (id) => {
+  fetchDataContact: () => {
     return (dispatch) => {
       return API.get('/contact', '')
         .then((result) => {
@@ -53,7 +53,7 @@ export const contactActions = {
       return new Promise((resolve, reject) => {
         return API.post('/contact', '', data)
           .then((result) => {
-            dispatch(addContact(result))
+            dispatch(addContact())
             resolve(result)
           }).catch((error) => {
             console.log(error)

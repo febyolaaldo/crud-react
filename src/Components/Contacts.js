@@ -45,7 +45,8 @@ class Contacts extends Component {
       firstName: '',
       lastName: '',
       age: '',
-      urlPhoto: ''
+      urlPhoto: '',
+      labelCard: ''
     }
 
     this.handleEdit = this.handleEdit.bind(this)
@@ -77,7 +78,8 @@ class Contacts extends Component {
       firstName: '',
       lastName: '',
       age: '',
-      urlPhoto: ''
+      urlPhoto: '',
+      labelCard: 'Add'
     })
   }
 
@@ -140,6 +142,7 @@ class Contacts extends Component {
       })
     } else {
       this.props.addContact(payloads).then(() => {
+        this.props.fetchDataContact()
         this.setState({
           showAdd: false
         })
@@ -155,7 +158,8 @@ class Contacts extends Component {
       age: age,
       urlPhoto: photo,
       showAdd: true,
-      showEdit: true
+      showEdit: true,
+      labelCard: 'Edit'
     })
   }
 
@@ -195,7 +199,7 @@ class Contacts extends Component {
 
   render() {
     const { contacts, contact_detail } = this.props
-    const { show, showAdd, firstName, lastName, age, urlPhoto } = this.state
+    const { show, showAdd, firstName, lastName, age, urlPhoto, labelCard } = this.state
 
     let listContacts = contacts !== undefined ?  contacts.map((el, i) => (this.listContacts(el, i, this.handleClickOpen))) : ''
     
@@ -252,7 +256,7 @@ class Contacts extends Component {
           </Dialog>
         : '' }
         <Dialog open={showAdd} onClose={this.handleCloseAddDialogs} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Add Contact</DialogTitle>
+          <DialogTitle id="form-dialog-title">{labelCard} Contact</DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
@@ -301,7 +305,7 @@ class Contacts extends Component {
               Tutup
             </Button>
             <Button onClick={this.handleSave} color="primary">
-              Simpan
+              {labelCard}
             </Button>
           </DialogActions>
         </Dialog>

@@ -24,8 +24,7 @@ export const reducerContact = (state = initialStates, action) => {
     }
     case types.ADD_CONTACT: {
       return {
-        ...state,
-        contact: [payload, ...contact]
+        ...state
       }
     }
     case types.EDIT_CONTACT: {
