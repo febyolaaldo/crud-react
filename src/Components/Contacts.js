@@ -298,10 +298,10 @@ class Contacts extends Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleCloseAddDialogs} color="primary">
-              Cancel
+              Tutup
             </Button>
             <Button onClick={this.handleSave} color="primary">
-              Subscribe
+              Simpan
             </Button>
           </DialogActions>
         </Dialog>
